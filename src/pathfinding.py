@@ -86,3 +86,14 @@ for i in range(0,rows):
     grid[i][0].obs = True
 
 def on_submit():
+    global start
+    global end
+    st = startBox.get().split(',')
+    ed = endBox.get().split(',')
+    start = grid[int(st[0])][int(st[1])]
+    end = grid[int(ed[0])][int(ed[1])]
+    window.quit()
+    window.destroy()
+
+
+
