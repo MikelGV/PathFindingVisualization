@@ -74,3 +74,15 @@ end = grid[3][6]
 for i in range(cols): # Show rect
     for j in range(rows):
         grid[i][j].show((255, 255, 255), 1)
+
+for i in range(0,rows):
+    grid[0][i].show(grey, 0)
+    grid[0][i].obs = True
+    grid[cols - 1][i].obs = True
+    grid[cols - 1][i].show(grey, 0)
+    grid[i][rows - 1].show(grey, 0)
+    grid[i][0].show(grey, 0)
+    grid[i][0].obs = True
+    grid[i][0].obs = True
+
+def on_submit():
