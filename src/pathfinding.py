@@ -25,10 +25,30 @@ class Spot:
         if self.closed == False:
             pygame.draw.rect(screen, color, (self.col * w, self.row * h, w, h), st)
             pygame.display.update()
+    
+    def path(self, color, st):
+        pygame.draw.rect(screen, color, (self.i * w, self.j * h, w, h), st)
+        pygame.display.update()
+
+    def add_neighbors(self, grid):
+        i = self.i
+        j = self.j
+
+        if i < cols -1 and grid[self.i + 1][j].obs == False:
+            self.neighbors.append(grid[self.i + 1][j])
+        if i > 0 and grid[self.i - 1][j].obs == False:
+            self.neighbors.append(grid[self.i - 1][j])
+        if i < rows -1 and grid[self.i][j + 1].obs == False:
+            self.neighbors.append(grid[self.i][j + 1])
+        if i > 0 and grid[self.i][j - 1].obs == False:
+            self.neighbors.append(grid[self.i][j - 1])
+        
+        
+        
 
 
 cols = 50
-grid = [0 for col in range(cols)]
+grid = [0 for i in range(cols)]
 rows = 50
 open_set = []
 close_set = []
@@ -40,17 +60,17 @@ w = 800 / cols
 h = 800 / rows
 came_from = []
 
-for col in range(cols): # Create 2d array
-    grid[col] = [0 for col in range(row)]
+for i in range(cols): # Create 2d array
+    grid[i] = [0 for i in range(rows)]
 
-for col in range(cols): # Create Spots
-    for row in range(rows):
-        grid[col][row] = Spot(col, row)
+for i in range(cols): # Create Spots
+    for j in range(rows):
+        grid[i][j] = Spot(i, j)
 
 # Start and end node
 start = grid[12][5]
 end = grid[3][6]
 
-for col in range(cols): # Show rect
-    for row in range(rows):
-        grid[col][row].show((255, 255, 255), 1)
+for i in range(cols): # Show rect
+    for j in range(rows):
+        grid[i][j].show((255, 255, 255), 1)
