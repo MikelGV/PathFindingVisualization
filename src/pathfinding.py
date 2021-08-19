@@ -95,5 +95,27 @@ def on_submit():
     window.quit()
     window.destroy()
 
+window = Tk()
+label = Label(window, text="Start(x,y):" )
+startBox = Entry(window)
+label1 = Label(window, text="End(x,y): ")
+endBox = Entry(window)
+var = IntVar()
+showPath = ttk.Checkbutton(window, text="Show Steps: ", onvalue=1, offvalue=0, variable=var)
+
+submit = Button(window, text="Submit", command=on_submit)
+
+showPath.grid(columnspan=2, rows=2)
+submit.grid(columnspan=2, rows=3)
+label1.grid(rows=1, pady=3)
+endBox.grid(rows=1, column=1, pady=3)
+startBox.grid(rows=0, column=1, pady=3)
+label.grid(rows=0, pady=3)
+
+window.update()
+mainloop()
+
+pygame.init()
+open_set.append(start)
 
 
