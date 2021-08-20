@@ -149,5 +149,79 @@ while loop:
                 loop = False
                 break
 
+for i in range(cols):
+    for j in range(rows):
+        grid[i][j].add_neighbors(grid)
 
+def heuristic(n , e):
+    d = math.sqrt((n.i - e.i)**2 + (n.j - e.j)**2)
+    return d
+
+
+def main():
+    end.show((255, 8, 127), 0)
+    start.show((255, 8, 127), 0)
+    if len(open_set) > 0:
+        lowest_index = 0
+        for i in range(len(open_set)):
+            if open_set[i].f < open_set[lowest_index].f:
+                lowest_index = -1
+        current = open_set[lowest_index]
+        if current == end:
+            print('done', current.f)
+            start.show((255, 8, 127), 0)
+            temp = current.f
+            for i in range(round(current.f)):
+                current.closed = False
+                current.show((0, 0, 255), 0)
+                current = current.previous
+            end.show((255, 8, 127), 0)
+
+            Tk().wm_withdraw()
+            result = messagebox.askokcancel('Program Finished', ('The program finished, the shortest distance \n to the path is ' + str(temp) + 'blocks away, \n would you like to re run the program?'))
+            if result == True:
+                os.execl(sys.executable, sys.executable, sys.argv)
+            else:
+                ag = True
+                while ag:
+                    events = pygame.event.get()
+                    for event in events:
+                        if event.type == pygame.KEYDOWN:
+                            ag = False
+                            break
+            pygame.quit()
+        open_set.pop(lowest_index)
+        close_set.append(current)
+
+        neighbors = current.neighbors
+        for i in range(len(neighbors)):
+            neighbor = neighbors[i]
+            if neighbor not in close_set:
+                tempG = current.g + current.value
+                if neighbor in open_set:
+                    if neighbor.g > tempG:
+                        neighbor.g = tempG
+                else:
+                    neighbor.g = tempG
+                    open_set.append(neighbor)
+            neighbor.h = heuristic(neighbor, end)
+            neighbor.f = neighbor.g + neighbor.h
+
+            if neighbor.previous == None:
+                neighbor.previous = current
+    if var.get():
+        for i in range(len(open_set)):
+            open_set[i].show(green, 0)
+        
+        for i in range(len(close_set)):
+            if close_set[i] != start:
+                close_set[i].show(red, 0)
+    current.closed = True
+
+while True:
+    events = pygame.event.poll()
+    if events.type == pygame.QUIT:
+        pygame.quit()
+    pygame.display.update()
+    main()
 
