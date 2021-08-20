@@ -105,17 +105,49 @@ showPath = ttk.Checkbutton(window, text="Show Steps: ", onvalue=1, offvalue=0, v
 
 submit = Button(window, text="Submit", command=on_submit)
 
-showPath.grid(columnspan=2, rows=2)
-submit.grid(columnspan=2, rows=3)
-label1.grid(rows=1, pady=3)
-endBox.grid(rows=1, column=1, pady=3)
-startBox.grid(rows=0, column=1, pady=3)
-label.grid(rows=0, pady=3)
+showPath.grid(columnspan=2, row=2)
+submit.grid(columnspan=2, row=3)
+label1.grid(row=1, pady=3)
+endBox.grid(row=1, column=1, pady=3)
+startBox.grid(row=0, column=1, pady=3)
+label.grid(row=0, pady=3)
 
 window.update()
 mainloop()
 
 pygame.init()
 open_set.append(start)
+
+def mouse_press(x):
+    t = x[0]
+    w = x[1]
+    g1 = t // (800 // cols)
+    g2 = w // (800 // rows)
+    acess = grid[g1][g2]
+    if (acess != start) and (acess != end):
+        if acess.obs == False:
+            acess.obs = True
+            acess.show((255, 255, 255), 0)
+
+end.show((255, 8, 127), 0)
+start.show((255, 8, 127), 0)
+
+loop = True
+
+while loop:
+    events = pygame.event.get()
+
+    for event in events:
+        if event.type == pygame.QUIT:
+            pygame.quit()
+        if pygame.mouse.get_pressed()[0]:
+            pos = pygame.mouse.get_pos()
+            mouse_press(pos)
+        
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                loop = False
+                break
+
 
 
